@@ -1,9 +1,9 @@
 package sample;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
@@ -13,10 +13,11 @@ import javafx.scene.layout.RowConstraints;
 
 public class Controller {
 
-    private Main Boardgame;
+    private Game Boardgame;
 
     private void runGame(){
-        Boardgame = new Main();
+        Boardgame = new Game();
+        Boardgame.createBoard();
         makeButtonMatrix();
 
     }
@@ -36,8 +37,6 @@ public class Controller {
     @FXML
     private Button Back;
 
-    @FXML
-    private Button[][] buttonMatrix;
 
     @FXML
     private MenuButton system;
@@ -55,6 +54,14 @@ public class Controller {
         btnMatrix[i][j].setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                //System.out.println("Button["+i+"]["+j+"]");
+                if(Boardgame.makeMove(i,j)) {
+                    if (Boardgame.grid[i][j].blackORWHITE) {
+                        btnMatrix[i][j].setStyle("-fx-background-color: white");
+                    } else
+                        btnMatrix[i][j].setStyle("-fx-background-color: black");
+                }
+
 
             }
         });
@@ -107,6 +114,25 @@ public class Controller {
     private void initialize() {
 
         runGame();
+
+        restart.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                runGame();
+            }
+        });
+        quitOne.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.exit(0);
+            }
+        });
+        quitTwo.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.exit(0);
+            }
+        });
 
     }
 }

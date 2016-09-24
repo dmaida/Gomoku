@@ -1,16 +1,19 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
-public class Main extends Application {
+public class Game extends Application {
 
     public Cell[][] grid;
     public boolean currentCOLOR = true; //TRUE-white, False-black
     public boolean endOfGame;
+    Stage GameWindow;
 
     public void createBoard() {
         grid = new Cell[15][15];
@@ -77,8 +80,7 @@ public class Main extends Application {
 
     
 
-    public void makeMove(int row, int col) {
-
+    public boolean makeMove(int row, int col) {
         Cell cell = grid[row][col];
 
         if (!cell.occupied && !endOfGame) {
@@ -93,7 +95,10 @@ public class Main extends Application {
             }
 
             currentCOLOR = !currentCOLOR; //change of turns
+            return true;
         }
+
+        else return false;
 
     }
 
@@ -126,15 +131,17 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Gomoku");
         primaryStage.setScene(new Scene(root, 600, 600));
         primaryStage.show();
+        GameWindow = primaryStage;
     }
 
 
     public static void main(String[] args) {
-        /*Main m = new Main();
+        /*Game m = new Game();
         m.createBoard();
         m.makeMove(0,10); //W
         m.makeMove(5,6); //B
