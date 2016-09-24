@@ -10,9 +10,11 @@ public class Main extends Application {
 
     public Cell[][] grid;
     public boolean currentCOLOR = true; //TRUE-white, False-black
+    public boolean endOfGame;
 
     public void createBoard() {
         grid = new Cell[15][15];
+        endOfGame = false;
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
@@ -79,13 +81,14 @@ public class Main extends Application {
 
         Cell cell = grid[row][col];
 
-        if (!cell.occupied) {
+        if (!cell.occupied && !endOfGame) {
             cell.occupied = true;
             cell.blackORWHITE = currentCOLOR;
 
             print();
 
             if(winner(row, col)){
+                endOfGame = true;
                 System.out.println("===== Winner Found =====");
             }
 
@@ -125,13 +128,13 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Gomoku");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setScene(new Scene(root, 600, 600));
         primaryStage.show();
     }
 
 
     public static void main(String[] args) {
-        Main m = new Main();
+        /*Main m = new Main();
         m.createBoard();
         m.makeMove(0,10); //W
         m.makeMove(5,6); //B
@@ -142,6 +145,7 @@ public class Main extends Application {
         m.makeMove(3,13); //W
         m.makeMove(5,9); //B
         m.makeMove(4,14); //W
+        */
 
         launch(args);
     }
