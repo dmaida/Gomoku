@@ -6,21 +6,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class Controller {
-
-    private Game Boardgame;
-
-    private void runGame(){
-        Boardgame = new Game();
-        Boardgame.createBoard();
-        makeButtonMatrix();
-
-    }
 
     @FXML
     private Button[][] btnMatrix;
@@ -46,6 +41,16 @@ public class Controller {
 
     @FXML
     private MenuItem quitTwo;
+
+    private Game Boardgame;
+    private int BGimage;
+
+    private void runGame(){
+        Boardgame = new Game();
+        Boardgame.createBoard();
+        makeButtonMatrix();
+
+    }
 
     private void giveEachBtnAnAction(int i, int j){
         final int currRow = i;
@@ -96,6 +101,7 @@ public class Controller {
                 Button btn = new Button();
                 btn.setMaxSize(30, 30);
                 btn.setMinSize(30, 30);
+                btn.setStyle("-fx-background-color: lightgray");
                 btnMatrix[i][j] = btn;
                 gp.add(btn, j, i);
 
@@ -113,7 +119,24 @@ public class Controller {
     @FXML
     private void initialize() {
 
+        BGimage = 0;
         runGame();
+
+        changeBG.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (BGimage == 0){
+                    //SET BACKGROUND IMAGES
+                    BGimage++;
+                }
+                if (BGimage == 1){
+                    BGimage++;
+                }
+                if (BGimage == 2){
+                    BGimage = 0;
+                }
+            }
+        });
 
         restart.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -131,6 +154,17 @@ public class Controller {
             @Override
             public void handle(ActionEvent event) {
                 System.exit(0);
+            }
+        });
+        Back.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(Boardgame.numTurns>0) {
+                    int row = Boardgame.gameHistory[Boardgame.numTurns - 1].row;
+                    int col = Boardgame.gameHistory[Boardgame.numTurns - 1].col;
+                    btnMatrix[row][col].setStyle("-fx-background-color: lightgray");
+                    Boardgame.undoMove();
+                }
             }
         });
 
