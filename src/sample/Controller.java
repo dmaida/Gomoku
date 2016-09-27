@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.shape.Circle;
 
 import javax.swing.*;
 import java.awt.*;
@@ -99,9 +100,21 @@ public class Controller {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 Button btn = new Button();
-                btn.setMaxSize(30, 30);
-                btn.setMinSize(30, 30);
-                btn.setStyle("-fx-background-color: lightgray");
+                double r=15;
+                btn.setShape(new Circle(r));
+                btn.setMinSize(2*r, 2*r);
+                btn.setMaxSize(2*r, 2*r);
+                btn.setStyle(
+                        "-fx-background-radius: 5em; " +
+                                "-fx-min-width: 30px; " +
+                                "-fx-min-height: 30px; " +
+                                "-fx-max-width: 30px; " +
+                                "-fx-max-height: 30px; " +
+                                "-fx-background-color: -fx-body-color;" +
+                                "-fx-background-insets: 0px; " +
+                                "-fx-padding: 0px;"
+                );
+
                 btnMatrix[i][j] = btn;
                 gp.add(btn, j, i);
 
