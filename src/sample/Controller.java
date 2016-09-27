@@ -20,6 +20,12 @@ public class Controller {
     private GridPane gp;
 
     @FXML
+    private GridPane gp2;
+
+    @FXML
+    private GridPane gp3;
+
+    @FXML
     private Button restart;
 
     @FXML
@@ -46,7 +52,8 @@ public class Controller {
         Boardgame = new Game();
         Boardgame.createBoard();
         makeButtonMatrix();
-
+        makeGrid();
+        gp2.setGridLinesVisible(true);
     }
 
     private void giveEachBtnAnAction(int i, int j){
@@ -70,11 +77,36 @@ public class Controller {
 
     }
 
+    private void makeGrid(){
+
+        gp2.getRowConstraints().removeAll(gp2.getRowConstraints());
+        gp2.getColumnConstraints().removeAll(gp2.getColumnConstraints());
+        gp2.getChildren().removeAll(gp2.getChildren());
+
+        int row = 16;
+        int col = 16;
+
+        for (int i = 0; i < row; i++) {
+            RowConstraints rConstraints = new RowConstraints();
+            rConstraints.setPrefHeight(30);
+            gp2.getRowConstraints().add(rConstraints);
+        }
+
+        for (int j = 0; j < col; j++) {
+            ColumnConstraints cConstraints = new ColumnConstraints();
+            cConstraints.setPrefWidth(30);
+            gp2.getColumnConstraints().add(cConstraints);
+        }
+
+    }
+
     private void makeButtonMatrix(){
 
         gp.getRowConstraints().removeAll(gp.getRowConstraints());
         gp.getColumnConstraints().removeAll(gp.getColumnConstraints());
         gp.getChildren().removeAll(gp.getChildren());
+
+
 
         int row = 15;
         int col = 15;
@@ -130,9 +162,10 @@ public class Controller {
 
 
         runGame();
-        Image pictureOne = new Image(getClass().getResourceAsStream("picture.png"), 500, 500, false, false);
-        Image pictureTwo = new Image(getClass().getResourceAsStream("picture2.png"), 500, 500, false, false);
-        Image pictureThree = new Image(getClass().getResourceAsStream("picture3.png"), 500, 500, false, false);
+        //gp.setGridLinesVisible(true);
+        Image pictureOne = new Image(getClass().getResourceAsStream("picture.png"), 515, 500, false, false);
+        Image pictureTwo = new Image(getClass().getResourceAsStream("picture2.png"), 515, 500, false, false);
+        Image pictureThree = new Image(getClass().getResourceAsStream("picture3.png"), 515, 500, false, false);
 
         BackgroundImage backgroundOne= new BackgroundImage(pictureOne,
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
@@ -145,24 +178,24 @@ public class Controller {
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
 
-        gp.setBackground(new Background(backgroundOne));
+        gp3.setBackground(new Background(backgroundOne));
 
         changeBG.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if (BGimage == 0){
                     BGimage++;
-                    gp.setBackground(new Background(backgroundTwo));
+                    gp3.setBackground(new Background(backgroundTwo));
 
                 }
                 else if (BGimage == 1){
                     BGimage++;
-                    gp.setBackground(new Background(backgroundThree));
+                    gp3.setBackground(new Background(backgroundThree));
 
                 }
                 else if (BGimage == 2){
                     BGimage = 0;
-                    gp.setBackground(new Background(backgroundOne));
+                    gp3.setBackground(new Background(backgroundOne));
 
                 }
                 System.out.println(BGimage);

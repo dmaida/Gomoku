@@ -1,19 +1,11 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import javafx.util.Pair;
 
-import java.util.AbstractQueue;
-import java.util.ArrayList;
-import java.util.PriorityQueue;
-import java.util.Stack;
-import java.util.concurrent.ArrayBlockingQueue;
 
 public class Game extends Application {
 
@@ -22,7 +14,6 @@ public class Game extends Application {
     public boolean endOfGame;
     public Cell[] gameHistory;
     public int numTurns;
-    public Parent gameWindow;
 
 
     public void createBoard() {
@@ -126,6 +117,8 @@ public class Game extends Application {
             numTurns--;
             Cell cell = grid[gameHistory[numTurns].row][gameHistory[numTurns].col];
             cell.occupied = false;
+            currentCOLOR = cell.blackORWHITE;
+            endOfGame = false;
             print();
         }
     }
@@ -171,26 +164,12 @@ public class Game extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Gomoku");
         primaryStage.setResizable(false);
-        primaryStage.setScene(new Scene(root, 500, 600));
+        primaryStage.setScene(new Scene(root, 515, 600));
         primaryStage.show();
-        gameWindow = root;
     }
 
 
     public static void main(String[] args) {
-        /*Game m = new Game();
-        m.createBoard();
-        m.makeMove(0,10); //W
-        m.makeMove(5,6); //B
-        m.makeMove(1,11); //W
-        m.makeMove(5,7); //B
-        m.makeMove(2,12); //W
-        m.makeMove(5,8); //B
-        m.makeMove(3,13); //W
-        m.makeMove(5,9); //B
-        m.makeMove(4,14); //W
-        */
-
         launch(args);
     }
 }
