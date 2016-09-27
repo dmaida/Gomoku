@@ -13,9 +13,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.Circle;
 
-import javax.swing.*;
-import java.awt.*;
-
 public class Controller {
 
     @FXML
@@ -110,10 +107,11 @@ public class Controller {
                                 "-fx-min-height: 30px; " +
                                 "-fx-max-width: 30px; " +
                                 "-fx-max-height: 30px; " +
-                                "-fx-background-color: -fx-body-color;" +
+                                "-fx-background-color: transparent;" +
                                 "-fx-background-insets: 0px; " +
                                 "-fx-padding: 0px;"
                 );
+
 
                 btnMatrix[i][j] = btn;
                 gp.add(btn, j, i);
@@ -175,7 +173,7 @@ public class Controller {
                 if(Boardgame.numTurns>0) {
                     int row = Boardgame.gameHistory[Boardgame.numTurns - 1].row;
                     int col = Boardgame.gameHistory[Boardgame.numTurns - 1].col;
-                    btnMatrix[row][col].setStyle("-fx-background-color: lightgray");
+                    btnMatrix[row][col].setStyle("-fx-background-color: transparent");
                     Boardgame.undoMove();
                 }
             }
