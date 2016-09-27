@@ -170,7 +170,8 @@ public class Game extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Gomoku");
-        primaryStage.setScene(new Scene(root, 600, 600));
+        primaryStage.setResizable(false);
+        primaryStage.setScene(new Scene(root, 500, 600));
         primaryStage.show();
         gameWindow = root;
     }

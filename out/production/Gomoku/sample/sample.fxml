@@ -37,7 +37,7 @@
         </HBox>
     </top>
     <bottom>
-        <AnchorPane prefHeight="65.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="22.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
                 <Button fx:id="Back" mnemonicParsing="false" text="Back" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" />
                 <Button fx:id="restart" mnemonicParsing="false" text="Restart" />

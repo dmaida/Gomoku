@@ -8,9 +8,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 
 public class Controller {
@@ -44,6 +42,7 @@ public class Controller {
     private int BGimage;
 
     private void runGame(){
+        BGimage = 0;
         Boardgame = new Game();
         Boardgame.createBoard();
         makeButtonMatrix();
@@ -112,7 +111,6 @@ public class Controller {
                                 "-fx-padding: 0px;"
                 );
 
-
                 btnMatrix[i][j] = btn;
                 gp.add(btn, j, i);
 
@@ -130,22 +128,44 @@ public class Controller {
     @FXML
     private void initialize() {
 
-        BGimage = 0;
+
         runGame();
+        Image pictureOne = new Image(getClass().getResourceAsStream("picture.png"), 500, 500, false, false);
+        Image pictureTwo = new Image(getClass().getResourceAsStream("picture2.png"), 500, 500, false, false);
+        Image pictureThree = new Image(getClass().getResourceAsStream("picture3.png"), 500, 500, false, false);
+
+        BackgroundImage backgroundOne= new BackgroundImage(pictureOne,
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+
+        BackgroundImage backgroundTwo= new BackgroundImage(pictureTwo,
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        BackgroundImage backgroundThree= new BackgroundImage(pictureThree,
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+
+        gp.setBackground(new Background(backgroundOne));
 
         changeBG.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if (BGimage == 0){
-                    //SET BACKGROUND IMAGES
                     BGimage++;
+                    gp.setBackground(new Background(backgroundTwo));
+
                 }
-                if (BGimage == 1){
+                else if (BGimage == 1){
                     BGimage++;
+                    gp.setBackground(new Background(backgroundThree));
+
                 }
-                if (BGimage == 2){
+                else if (BGimage == 2){
                     BGimage = 0;
+                    gp.setBackground(new Background(backgroundOne));
+
                 }
+                System.out.println(BGimage);
             }
         });
 
