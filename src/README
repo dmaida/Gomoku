@@ -1,0 +1,31 @@
+Name: Daniel Maida; Nazar Stelmakh
+Email: daniel.maida@wsu.edu; nazar.stelmakh@wsu.edu
+
+Description:
+This is an implementation of the classic Gomoku game. The goal of the game
+is to get five in a row of the same color. This program allows for two 
+users to play against one another alternating turns.
+
+Features:
+	- Change Background (3 images);
+	- Undo last move;
+	- Restart
+	- Quit Game;
+
+How to build/run:
+In the command-line enter the src folder. 
+Run the command: >> make run
+
+Files in archive:
+
+1. README
+2. Game.java
+3. Controller.java
+4. sample.fxml
+5. Makefile
+6. Pictures/
+	1. picture.png
+	2. picture2.png
+	3. picture3.png
+
+

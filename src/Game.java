@@ -1,5 +1,3 @@
-package sample;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,13 +12,15 @@ public class Game extends Application {
     public boolean endOfGame;
     public Cell[] gameHistory;
     public int numTurns;
+    public boolean isTie;
 
 
     public void createBoard() {
         grid = new Cell[15][15];
-        gameHistory = new Cell[255];
+        gameHistory = new Cell[225];
         numTurns = 0;
         endOfGame = false;
+        isTie = false;
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
@@ -96,20 +96,19 @@ public class Game extends Application {
             gameHistory[numTurns] = cell;
             numTurns++;
 
-            print();
-            printHistory();
-
             if(winner(row, col)){
                 endOfGame = true;
-                System.out.println("===== Winner Found =====");
+                return true;
             }
-
+            if (numTurns == 225) {
+                endOfGame = true;
+                isTie = true;
+                return true;
+            }
             currentCOLOR = !currentCOLOR; //change of turns
             return true;
         }
-
         else return false;
-
     }
 
     public void undoMove(){
@@ -119,17 +118,12 @@ public class Game extends Application {
             cell.occupied = false;
             currentCOLOR = cell.blackORWHITE;
             endOfGame = false;
-            print();
+            isTie = false;
         }
     }
 
-    private void printHistory(){
-        for (int i = 0; i < numTurns; i++) {
-            System.out.print("["+gameHistory[i].row+", "+ gameHistory[i].col+"]");
-        }
-    }
 
-    private void print() {
+    private void print() {  //This method was used for testing purposes in the early stages.
 
         for (int i = 0; i < grid.length; i++) {
             System.out.println();

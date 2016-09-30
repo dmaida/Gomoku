@@ -1,11 +1,7 @@
-package sample;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -34,7 +30,6 @@ public class Controller {
     @FXML
     private Button Back;
 
-
     @FXML
     private MenuButton system;
 
@@ -46,14 +41,20 @@ public class Controller {
 
     private Game Boardgame;
     private int BGimage;
+    private boolean isFirstGame =true;
 
     private void runGame(){
         BGimage = 0;
         Boardgame = new Game();
         Boardgame.createBoard();
         makeButtonMatrix();
-        makeGrid();
-        gp2.setGridLinesVisible(true);
+
+        if (isFirstGame) {
+            isFirstGame = false;
+            makeGrid();
+            gp2.setGridLinesVisible(true);
+        }
+
     }
 
     private void giveEachBtnAnAction(int i, int j){
@@ -63,15 +64,29 @@ public class Controller {
         btnMatrix[i][j].setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //System.out.println("Button["+i+"]["+j+"]");
+
                 if(Boardgame.makeMove(i,j)) {
                     if (Boardgame.grid[i][j].blackORWHITE) {
                         btnMatrix[i][j].setStyle("-fx-background-color: white");
                     } else
                         btnMatrix[i][j].setStyle("-fx-background-color: black");
                 }
+                if(Boardgame.endOfGame) {
 
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION,"", ButtonType.OK);
+                    alert.setTitle("Gomoku");
+                    alert.setContentText("Press OK to continue.");
 
+                    if (Boardgame.isTie) {
+                        alert.setHeaderText("Tie Game!");
+                    }
+                    else if (Boardgame.currentCOLOR) {
+                        alert.setHeaderText("White Wins!");
+                    } else {
+                        alert.setHeaderText("Black Wins!");
+                    }
+                    alert.showAndWait();
+                }
             }
         });
 
@@ -96,8 +111,8 @@ public class Controller {
             ColumnConstraints cConstraints = new ColumnConstraints();
             cConstraints.setPrefWidth(30);
             gp2.getColumnConstraints().add(cConstraints);
-        }
 
+        }
     }
 
     private void makeButtonMatrix(){
@@ -105,8 +120,6 @@ public class Controller {
         gp.getRowConstraints().removeAll(gp.getRowConstraints());
         gp.getColumnConstraints().removeAll(gp.getColumnConstraints());
         gp.getChildren().removeAll(gp.getChildren());
-
-
 
         int row = 15;
         int col = 15;
@@ -153,19 +166,14 @@ public class Controller {
 
             }
         }
-
-
     }
 
     @FXML
     private void initialize() {
-
-
         runGame();
-        //gp.setGridLinesVisible(true);
-        Image pictureOne = new Image(getClass().getResourceAsStream("picture.png"), 515, 500, false, false);
-        Image pictureTwo = new Image(getClass().getResourceAsStream("picture2.png"), 515, 500, false, false);
-        Image pictureThree = new Image(getClass().getResourceAsStream("picture3.png"), 515, 500, false, false);
+        Image pictureOne = new Image(getClass().getResourceAsStream("pictures/picture.png"), 515, 515, false, false);
+        Image pictureTwo = new Image(getClass().getResourceAsStream("pictures/picture2.png"), 515, 515, false, false);
+        Image pictureThree = new Image(getClass().getResourceAsStream("pictures/picture3.png"), 515, 515, false, false);
 
         BackgroundImage backgroundOne= new BackgroundImage(pictureOne,
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
@@ -198,7 +206,6 @@ public class Controller {
                     gp3.setBackground(new Background(backgroundOne));
 
                 }
-                System.out.println(BGimage);
             }
         });
 
