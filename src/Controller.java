@@ -41,9 +41,9 @@ public class Controller {
 
     private Game Boardgame;
     private int BGimage;
-    private boolean isFirstGame =true;
+    private boolean isFirstGame = true;
 
-    private void runGame(){
+    private void runGame() {
         BGimage = 0;
         Boardgame = new Game();
         Boardgame.createBoard();
@@ -57,7 +57,7 @@ public class Controller {
 
     }
 
-    private void giveEachBtnAnAction(int i, int j){
+    private void giveEachBtnAnAction(int i, int j) {
         final int currRow = i;
         final int currCol = j;
 
@@ -65,22 +65,21 @@ public class Controller {
             @Override
             public void handle(MouseEvent event) {
 
-                if(Boardgame.makeMove(i,j)) {
+                if (Boardgame.makeMove(i, j)) {
                     if (Boardgame.grid[i][j].blackORWHITE) {
                         btnMatrix[i][j].setStyle("-fx-background-color: white");
                     } else
                         btnMatrix[i][j].setStyle("-fx-background-color: black");
                 }
-                if(Boardgame.endOfGame) {
+                if (Boardgame.endOfGame) {
 
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION,"", ButtonType.OK);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "", ButtonType.OK);
                     alert.setTitle("Gomoku");
                     alert.setContentText("Press OK to continue.");
 
                     if (Boardgame.isTie) {
                         alert.setHeaderText("Tie Game!");
-                    }
-                    else if (Boardgame.currentCOLOR) {
+                    } else if (Boardgame.currentCOLOR) {
                         alert.setHeaderText("White Wins!");
                     } else {
                         alert.setHeaderText("Black Wins!");
@@ -92,7 +91,7 @@ public class Controller {
 
     }
 
-    private void makeGrid(){
+    private void makeGrid() {
 
         gp2.getRowConstraints().removeAll(gp2.getRowConstraints());
         gp2.getColumnConstraints().removeAll(gp2.getColumnConstraints());
@@ -115,7 +114,7 @@ public class Controller {
         }
     }
 
-    private void makeButtonMatrix(){
+    private void makeButtonMatrix() {
 
         gp.getRowConstraints().removeAll(gp.getRowConstraints());
         gp.getColumnConstraints().removeAll(gp.getColumnConstraints());
@@ -136,25 +135,18 @@ public class Controller {
             gp.getColumnConstraints().add(cConstraints);
         }
 
-        btnMatrix =  new Button[row][col];
+        btnMatrix = new Button[row][col];
 
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 Button btn = new Button();
-                double r=15;
+                double r = 15;
                 btn.setShape(new Circle(r));
-                btn.setMinSize(2*r, 2*r);
-                btn.setMaxSize(2*r, 2*r);
-                btn.setStyle(
-                        "-fx-background-radius: 5em; " +
-                                "-fx-min-width: 30px; " +
-                                "-fx-min-height: 30px; " +
-                                "-fx-max-width: 30px; " +
-                                "-fx-max-height: 30px; " +
-                                "-fx-background-color: transparent;" +
-                                "-fx-background-insets: 0px; " +
-                                "-fx-padding: 0px;"
-                );
+                btn.setMinSize(2 * r, 2 * r);
+                btn.setMaxSize(2 * r, 2 * r);
+                btn.setStyle("-fx-background-radius: 5em; " + "-fx-min-width: 30px; " + "-fx-min-height: 30px; "
+                        + "-fx-max-width: 30px; " + "-fx-max-height: 30px; " + "-fx-background-color: transparent;"
+                        + "-fx-background-insets: 0px; " + "-fx-padding: 0px;");
 
                 btnMatrix[i][j] = btn;
                 gp.add(btn, j, i);
@@ -175,33 +167,28 @@ public class Controller {
         Image pictureTwo = new Image(getClass().getResourceAsStream("pictures/picture2.png"), 515, 515, false, false);
         Image pictureThree = new Image(getClass().getResourceAsStream("pictures/picture3.png"), 515, 515, false, false);
 
-        BackgroundImage backgroundOne= new BackgroundImage(pictureOne,
-                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
+        BackgroundImage backgroundOne = new BackgroundImage(pictureOne, BackgroundRepeat.REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
-        BackgroundImage backgroundTwo= new BackgroundImage(pictureTwo,
-                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
-        BackgroundImage backgroundThree= new BackgroundImage(pictureThree,
-                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
+        BackgroundImage backgroundTwo = new BackgroundImage(pictureTwo, BackgroundRepeat.REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        BackgroundImage backgroundThree = new BackgroundImage(pictureThree, BackgroundRepeat.REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
         gp3.setBackground(new Background(backgroundOne));
 
         changeBG.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (BGimage == 0){
+                if (BGimage == 0) {
                     BGimage++;
                     gp3.setBackground(new Background(backgroundTwo));
 
-                }
-                else if (BGimage == 1){
+                } else if (BGimage == 1) {
                     BGimage++;
                     gp3.setBackground(new Background(backgroundThree));
 
-                }
-                else if (BGimage == 2){
+                } else if (BGimage == 2) {
                     BGimage = 0;
                     gp3.setBackground(new Background(backgroundOne));
 
@@ -230,7 +217,7 @@ public class Controller {
         Back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if(Boardgame.numTurns>0) {
+                if (Boardgame.numTurns > 0) {
                     int row = Boardgame.gameHistory[Boardgame.numTurns - 1].row;
                     int col = Boardgame.gameHistory[Boardgame.numTurns - 1].col;
                     btnMatrix[row][col].setStyle("-fx-background-color: transparent");

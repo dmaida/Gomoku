@@ -4,16 +4,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
 public class Game extends Application {
 
     public Cell[][] grid;
-    public boolean currentCOLOR = true; //TRUE-white, False-black
+    public boolean currentCOLOR = true; // TRUE-white, False-black
     public boolean endOfGame;
     public Cell[] gameHistory;
     public int numTurns;
     public boolean isTie;
-
 
     public void createBoard() {
         grid = new Cell[15][15];
@@ -33,19 +31,18 @@ public class Game extends Application {
         }
     }
 
-
     private boolean winner(int row, int col) {
         // This is called just after a piece has been played on the
         // square in the specified row and column. If there are 5 squares (or more)
         // in a row in any direction, then the game is won.
 
-        if (count(row, col, 1, 0 ) >= 5)
+        if (count(row, col, 1, 0) >= 5)
             return true;
-        if (count(row, col, 0, 1 ) >= 5)
+        if (count(row, col, 0, 1) >= 5)
             return true;
-        if (count(row, col, 1, -1 ) >= 5)
+        if (count(row, col, 1, -1) >= 5)
             return true;
-        if (count(row, col, 1, 1 ) >= 5)
+        if (count(row, col, 1, 1) >= 5)
             return true;
 
         // When we get to this point, we know that the game is not won.
@@ -54,36 +51,32 @@ public class Game extends Application {
 
     }
 
-
     private int count(int row, int col, int dirX, int dirY) {
 
-
-        int ct = 1;  // Holds current number of pieces in a 'row'
+        int ct = 1; // Holds current number of pieces in a 'row'
 
         int r;
-        int c;      // A row and column to be examined
+        int c; // A row and column to be examined
 
-        r = row + dirX;  // Look at square in specified direction.
+        r = row + dirX; // Look at square in specified direction.
         c = col + dirY;
-        while ( r >= 0 && r < 15 && c >= 0 && c < 15 && grid[r][c].occupied && grid[r][c].blackORWHITE == currentCOLOR ) {
+        while (r >= 0 && r < 15 && c >= 0 && c < 15 && grid[r][c].occupied && grid[r][c].blackORWHITE == currentCOLOR) {
             ct++;
-            r += dirX;  // Go on to next square in this direction.
+            r += dirX; // Go on to next square in this direction.
             c += dirY;
         }
 
-        r = row - dirX;  // Look in the opposite direction.
+        r = row - dirX; // Look in the opposite direction.
         c = col - dirY;
-        while ( r >= 0 && r < 15 && c >= 0 && c < 15 && grid[r][c].occupied && grid[r][c].blackORWHITE == currentCOLOR ) {
+        while (r >= 0 && r < 15 && c >= 0 && c < 15 && grid[r][c].occupied && grid[r][c].blackORWHITE == currentCOLOR) {
             ct++;
-            r -= dirX;   // Go on to next square in this direction.
+            r -= dirX; // Go on to next square in this direction.
             c -= dirY;
         }
 
         return ct;
 
     }
-
-
 
     public boolean makeMove(int row, int col) {
         Cell cell = grid[row][col];
@@ -96,7 +89,7 @@ public class Game extends Application {
             gameHistory[numTurns] = cell;
             numTurns++;
 
-            if(winner(row, col)){
+            if (winner(row, col)) {
                 endOfGame = true;
                 return true;
             }
@@ -105,14 +98,14 @@ public class Game extends Application {
                 isTie = true;
                 return true;
             }
-            currentCOLOR = !currentCOLOR; //change of turns
+            currentCOLOR = !currentCOLOR; // change of turns
             return true;
-        }
-        else return false;
+        } else
+            return false;
     }
 
-    public void undoMove(){
-        if(numTurns>0) {
+    public void undoMove() {
+        if (numTurns > 0) {
             numTurns--;
             Cell cell = grid[gameHistory[numTurns].row][gameHistory[numTurns].col];
             cell.occupied = false;
@@ -122,21 +115,18 @@ public class Game extends Application {
         }
     }
 
-
-    private void print() {  //This method was used for testing purposes in the early stages.
+    private void print() { // This method was used for testing purposes in the early stages.
 
         for (int i = 0; i < grid.length; i++) {
             System.out.println();
             for (int j = 0; j < grid[i].length; j++) {
-                if(grid[i][j].occupied){
-                    if(!grid[i][j].blackORWHITE){
+                if (grid[i][j].occupied) {
+                    if (!grid[i][j].blackORWHITE) {
                         System.out.print("|X|");
-                    }
-                    else{
+                    } else {
                         System.out.print("|O|");
                     }
-                }
-                else{
+                } else {
                     System.out.print("|_|");
                 }
             }
@@ -144,7 +134,7 @@ public class Game extends Application {
         System.out.println();
     }
 
-    public class Cell{
+    public class Cell {
         boolean occupied;
         boolean blackORWHITE;
         int row;
@@ -153,7 +143,7 @@ public class Game extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
 
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Gomoku");
@@ -161,7 +151,6 @@ public class Game extends Application {
         primaryStage.setScene(new Scene(root, 515, 600));
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);
