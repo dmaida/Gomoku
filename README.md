@@ -5,10 +5,10 @@ is to get five in a row of the same color. This program allows for two
 users to play against one another alternating turns.
 
 Features:
-	- Change Background (3 images)
-	- Undo last move
-	- Restart
-	- Quit Game
+- Change Background (3 images)
+- Undo last move
+- Restart
+- Quit Game
 
 ## How to build
 
